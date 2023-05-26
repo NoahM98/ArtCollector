@@ -1,17 +1,17 @@
 /**
  * This file features and exports all of your calls to the API
- * 
+ *
  * You need to replace YOUR_API_KEY in the string associated with KEY with your actual API key
  */
 export const BASE_URL = 'https://api.harvardartmuseums.org';
-export const KEY = 'apikey=YOUR_API_KEY';
+export const KEY = 'apikey=264b1441-fa3b-467e-a09f-66bcacc9b0e2';
 
 /**
  * This will make a call to the API for a single term and value (e.g. "person", and "unknown"), and return the result
  */
 export async function fetchQueryResultsFromTermAndValue(term, value) {
   try {
-    const response = await fetch(`${ BASE_URL }/object?${ KEY }&${ term }=${ encodeURI(value.split('-').join('|')) }`);
+    const response = await fetch(`${BASE_URL}/object?${KEY}&${term}=${encodeURI(value.split('-').join('|'))}`);
     const data = await response.json();
 
     return data;
@@ -36,7 +36,7 @@ export async function fetchQueryResultsFromURL(url) {
 
 /**
  * Requires an object { century: '', classification: '', queryString: '' } to be passed in as an argument
- * 
+ *
  * Then makes a call to the API, and returns the first page of results
  */
 export async function fetchQueryResults({
@@ -44,8 +44,7 @@ export async function fetchQueryResults({
   classification,
   queryString,
 }) {
-  const url = `${ BASE_URL }/object?${ KEY }&classification=${ classification }&century=${ 
-    century }&keyword=${ queryString }`;
+  const url = `${BASE_URL}/object?${KEY}&classification=${classification}&century=${century}&keyword=${queryString}`;
 
   try {
     const response = await fetch(url);
@@ -65,7 +64,7 @@ export async function fetchAllCenturies() {
     return JSON.parse(localStorage.getItem('centuries'));
   }
 
-  const url = `${ BASE_URL }/century?${ KEY }&size=100&sort=temporalorder`;
+  const url = `${BASE_URL}/century?${KEY}&size=100&sort=temporalorder`;
 
   try {
     const response = await fetch(url);
@@ -81,14 +80,14 @@ export async function fetchAllCenturies() {
 }
 
 /**
- * This returns early if there are classifications stored in localStorage, or fetches them from the API and stores them in localStorage if not 
+ * This returns early if there are classifications stored in localStorage, or fetches them from the API and stores them in localStorage if not
  */
 export async function fetchAllClassifications() {
   if (localStorage.getItem('classifications')) {
     return JSON.parse(localStorage.getItem('classifications'));
   }
 
-  const url = `${ BASE_URL }/classification?${ KEY }&size=100&sort=name`;
+  const url = `${BASE_URL}/classification?${KEY}&size=100&sort=name`;
 
   try {
     const response = await fetch(url);
