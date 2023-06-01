@@ -6,7 +6,7 @@ import React from 'react';
  */
 import { fetchQueryResultsFromURL } from '../api';
 
-const Preview = ({ searchResults, isLoading, setSearchResults, setFeaturedResults }) => {
+const Preview = ({ searchResults, setIsLoading, setSearchResults, setFeaturedResult }) => {
   const info = searchResults.info;
   const records = searchResults.records;
   /**
@@ -81,7 +81,7 @@ const Preview = ({ searchResults, isLoading, setSearchResults, setFeaturedResult
                 // prevent the default
                 // set the featured result to be this record, using setFeaturedResult
                 event.preventDefault();
-                setFeaturedResults(record);
+                setFeaturedResult(record);
               }}>
               {
                 // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing
