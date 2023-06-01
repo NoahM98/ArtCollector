@@ -108,42 +108,43 @@ const Feature = ({ featuredResult, setIsLoading, setSearchResults }) => {
                                     null} */}
                                 {searchFacts.map((el, ind) => {
                                     return (
-                                        <>
+                                        <React.Fragment key={ind + el} >
                                             {featuredResult[el] ?
                                                 <>
-                                                    <span key={`1-${ind}${el}`} className="title" style={{ "text-transform": "capitalize" }}>{el}</span>
-                                                    <Searchable key={`2-${ind}${el}`} searchValue={featuredResult[el]} searchTerm={el} setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
+                                                    <span className="title" style={{ "textTransform": "capitalize" }}>{el}</span>
+                                                    <Searchable searchValue={featuredResult[el]} searchTerm={el} setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
                                                 </> :
                                                 null}
-                                        </>
+                                        </React.Fragment>
                                     )
                                 })}
                                 {featuredResult.people ?
                                     featuredResult.people.map((el, ind) => {
                                         return (
-                                            <>
-                                                <span key={`1-${ind}${el.displayname}`} className="title" style={{ "text-transform": "capitalize" }}>person</span>
-                                                <Searchable key={`2-${ind}${el.displayname}`} searchValue={el.displayname} searchTerm={'displayname'} setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
-                                            </>
+                                            <React.Fragment key={ind + el.displayname}>
+                                                <span className="title" style={{ "textTransform": "capitalize" }}>person</span>
+                                                <Searchable searchValue={el.displayname} searchTerm={'displayname'} setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
+                                            </React.Fragment>
                                         )
                                     }) : null}
                                 {otherFacts.map((el, ind) => {
                                     return (
-                                        <>
+                                        <React.Fragment key={ind + el}>
                                             {featuredResult[el] ?
                                                 <>
-                                                    <span key={`1-${ind}${el}`} className="title" style={{ "text-transform": "capitalize" }}>{el}</span>
-                                                    <span key={`2-${ind}${el}`} className="content">{featuredResult[el]}</span>
+                                                    <span className="title" style={{ "textTransform": "capitalize" }}>{el}</span>
+                                                    <span className="content">{featuredResult[el]}</span>
                                                 </> :
                                                 null}
-                                        </>
+                                        </React.Fragment>
                                     )
                                 })}
                             </section>
                             <section className="photos">
-                                {featuredResult.images.map((el) => {
-                                    return <img key={el.imageid} src={el.baseimageurl} alt={el.alttext} />
-                                })}
+                                {featuredResult.images ?
+                                    featuredResult.images.map((el, ind) => {
+                                        return <img key={`${ind}-${el.imageid}`} src={el.baseimageurl} alt={el.alttext} />
+                                    }) : null}
                             </section>
                         </div>
                     </main >
