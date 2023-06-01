@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Title from './components/Title';
 import Loading from './components/Loading';
 import Search from './components/Search';
+import Preview from './components/Preview';
 
 // These imports won't work until you fix ./components/index.js
 // import {
@@ -26,13 +27,17 @@ const App = () => {
   const [featuredResult, setFeaturedResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    console.log(searchResults);
+  }, [searchResults]);
+
   return <div className="app">
     {/* <Title /> is static, doesn't need any props */}
     <Title />
     {/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */}
     <Search setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
     {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
-    {/* <Preview searchResults={searchResults} setIsLoading={setIsLoading} setSearchResults={setSearchResults} /> */}
+    <Preview searchResults={searchResults} setIsLoading={setIsLoading} setSearchResults={setSearchResults} setFeaturedResult={setFeaturedResult} />
     {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}
     {/* <Feature featuredResult={featuredResult} setIsLoading={setIsLoading} setSearchResults={setSearchResults} /> */}
     {/* <Loading /> is static, but should only render when isLoading is true */}
