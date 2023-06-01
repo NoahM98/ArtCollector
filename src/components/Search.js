@@ -41,17 +41,7 @@ const Search = ({ setIsLoading, setSearchResults }) => {
    */
   useEffect(() => {
     try {
-      const fetchData = async () => {
-        const centuryData = await fetchAllCenturies();
-        const classData = await fetchAllClassifications();
-        console.log(centuryData);
-        console.log(classData);
-        setCenturyList(centuryData);
-        setClassificationList(classData);
-        console.log(centuryList);
-        console.log(classificationList);
-      }
-      fetchData();
+      // First Try:
       // Promise.all([fetchAllCenturies, fetchAllClassifications])
       //   .then((data) => {
       //     console.log(data);
@@ -60,10 +50,38 @@ const Search = ({ setIsLoading, setSearchResults }) => {
       //     console.log(centuryList);
       //     console.log(classificationList);
       //   })
+      // Second Try:
+      // const fetchData = async () => {
+      //   const centuryData = await fetchAllCenturies();
+      //   const classData = await fetchAllClassifications();
+      //   console.log(centuryData);
+      //   console.log(classData);
+      //   setCenturyList(centuryData);
+      //   setClassificationList(classData);
+      //   console.log(centuryList);
+      //   console.log(classificationList);
+      // }
+      // fetchData();
+      // Third Try:
+      const classificationPromise = fetchAllClassifications();
+      const centuryPromise = fetchAllCenturies();
+      Promise.all([classificationPromise, centuryPromise])
+        .then((data) => {
+          setClassificationList(data[0]);
+          setCenturyList(data[1]);
+        });
     } catch (err) {
       console.error(err);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(classification);
+  }, [classification]);
+
+  useEffect(() => {
+    console.log(century);
+  }, [century]);
 
   /**
    * This is a form element, so we need to bind an onSubmit handler to it which:
@@ -86,7 +104,7 @@ const Search = ({ setIsLoading, setSearchResults }) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      let result = await fetchQueryResults(century, classification, queryString);
+      let result = await fetchQueryResults({ century, classification, queryString });
       console.log(result);
       setSearchResults(result);
     } catch (err) {
