@@ -1,4 +1,4 @@
-import { BASE_URL, KEY } from "../api-key";
+import { BASE_URL, KEY } from "./api-key";
 
 /**
  * This file features and exports all of your calls to the API
