@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllCenturies, fetchAllClassifications, fetchQueryResults } from '../api';
+import SuggestType from './SuggestType';
 
 /**
  * Don't touch these imports!
@@ -10,7 +11,7 @@ import { fetchAllCenturies, fetchAllClassifications, fetchQueryResults } from '.
 //   fetchQueryResults
 // } from '../api';
 
-const Search = ({ setIsLoading, setSearchResults }) => {
+const Search = ({ setIsLoading, setSearchResults, setFeaturedResult }) => {
   // Make sure to destructure setIsLoading and setSearchResults from the props
 
 
@@ -30,6 +31,7 @@ const Search = ({ setIsLoading, setSearchResults }) => {
   const [queryString, setQueryString] = useState('');
   const [century, setCentury] = useState('any');
   const [classification, setClassification] = useState('any');
+  const [suggest, setSuggest] = useState({});
 
 
   /**
@@ -119,8 +121,11 @@ const Search = ({ setIsLoading, setSearchResults }) => {
         type="text"
         placeholder="enter keywords..."
         value={queryString}
-        onChange={(event) => {
+        onChange={async (event) => {
           setQueryString(event.target.value);
+          const results = await fetchQueryResults({ century, classification, queryString, });
+          setSuggest(results);
+          console.log(suggest);
         }} />
     </fieldset>
     <fieldset>
@@ -156,6 +161,12 @@ const Search = ({ setIsLoading, setSearchResults }) => {
       </select>
     </fieldset>
     <button>SEARCH</button>
+    {suggest.records ?
+      <ul id="suggesting">
+        {suggest.records.map((record, ind) => {
+          return <SuggestType key={record.id + ind} title={record.title} setFeaturedResult={setFeaturedResult} record={record} setSuggest={setSuggest} />
+        })}
+      </ul> : null}
   </form>
 }
 

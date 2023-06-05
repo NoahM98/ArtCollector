@@ -5,6 +5,7 @@ import Loading from './components/Loading';
 import Search from './components/Search';
 import Preview from './components/Preview';
 import Feature from './components/Feature';
+// import SuggestType from './components/SuggestType';
 
 // These imports won't work until you fix ./components/index.js
 // import {
@@ -40,7 +41,7 @@ const App = () => {
     {/* <Title /> is static, doesn't need any props */}
     <Title />
     {/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */}
-    <Search setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
+    <Search setIsLoading={setIsLoading} setSearchResults={setSearchResults} setFeaturedResult={setFeaturedResult} />
     {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
     <Preview searchResults={searchResults} setIsLoading={setIsLoading} setSearchResults={setSearchResults} setFeaturedResult={setFeaturedResult} />
     {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}
